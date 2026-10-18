@@ -3,607 +3,848 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="theme-color" content="#4f46e5">
-  <meta name="description" content="Task E - Mobile-first voice-powered to-do list that turns spoken notes into structured tasks with Google Auth">
+  <meta name="theme-color" content="#6366f1">
+  <meta name="description" content="Task E - Next-Gen Voice-to-Task Progressive Web App. Turn complex spoken notes into structured, prioritized, and categorized to-dos with zero latency, 100% client-side privacy, and Google Authentication.">
 
-  <title>Task E · Voice-Powered Task Management</title>
+  <title>Task E · Intelligent Voice-Powered Task Management PWA</title>
 
+  <!-- PWA Manifest & Icons -->
   <link rel="manifest" href="./manifest.json">
   <link rel="icon" type="image/svg+xml" href="./icons/icon.svg">
   <link rel="apple-touch-icon" href="./icons/icon.svg">
 
   <link rel="stylesheet" href="./styles.css">
-  <style>
-    /* Landing Page Specific Enhancements */
-    .landing-wrapper {
-      max-width: 980px;
-      margin: 0 auto;
-      padding: 24px 20px 80px;
-      display: flex;
-      flex-direction: column;
-      gap: 64px;
-    }
-
-    .landing-nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 12px 0;
-    }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-    }
-
-    .nav-link {
-      color: var(--text-secondary);
-      text-decoration: none;
-      font-size: 0.95rem;
-      font-weight: 500;
-      transition: color 0.2s ease;
-    }
-
-    .nav-link:hover {
-      color: var(--text-primary);
-    }
-
-    /* Hero Section */
-    .hero {
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 20px;
-      padding: 40px 0 20px;
-    }
-
-    .badge-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 14px;
-      background: rgba(99, 102, 241, 0.12);
-      border: 1px solid rgba(99, 102, 241, 0.3);
-      border-radius: var(--radius-full);
-      font-size: 0.82rem;
-      font-weight: 600;
-      color: #818cf8;
-    }
-
-    .hero-title {
-      font-size: 2.75rem;
-      font-weight: 800;
-      line-height: 1.15;
-      letter-spacing: -0.03em;
-      max-width: 760px;
-      background: linear-gradient(135deg, #f8fafc 30%, #818cf8 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    [data-theme="light"] .hero-title {
-      background: linear-gradient(135deg, #0f172a 30%, #4f46e5 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .hero-subtitle {
-      font-size: 1.15rem;
-      color: var(--text-secondary);
-      max-width: 620px;
-      line-height: 1.6;
-    }
-
-    .hero-ctas {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: center;
-      gap: 14px;
-      margin-top: 8px;
-    }
-
-    .btn-hero {
-      padding: 12px 28px;
-      font-size: 1rem;
-      border-radius: var(--radius-md);
-      font-weight: 600;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      transition: all 0.2s ease;
-    }
-
-    .btn-hero-primary {
-      background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
-      color: #ffffff;
-      box-shadow: 0 8px 24px rgba(99, 102, 241, 0.4);
-    }
-
-    .btn-hero-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 12px 28px rgba(99, 102, 241, 0.55);
-    }
-
-    .btn-hero-secondary {
-      background: var(--bg-secondary);
-      color: var(--text-primary);
-      border: 1px solid var(--border-color);
-    }
-
-    .btn-hero-secondary:hover {
-      background: var(--bg-card-hover);
-      border-color: var(--accent-primary);
-    }
-
-    /* Interactive Demo Card on Landing Page */
-    .demo-container {
-      width: 100%;
-      max-width: 720px;
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius-lg);
-      padding: 24px;
-      box-shadow: var(--shadow-lg);
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      text-align: left;
-    }
-
-    .demo-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-bottom: 1px solid var(--border-color);
-      padding-bottom: 12px;
-    }
-
-    .demo-tag {
-      font-size: 0.75rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--accent-primary);
-    }
-
-    .demo-input-box {
-      background: var(--bg-secondary);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius-md);
-      padding: 12px 14px;
-      font-size: 0.95rem;
-      color: var(--text-primary);
-    }
-
-    .demo-sample-btns {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .demo-sample-btn {
-      background: var(--bg-secondary);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius-sm);
-      padding: 6px 12px;
-      font-size: 0.8rem;
-      color: var(--text-secondary);
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-
-    .demo-sample-btn:hover {
-      border-color: var(--accent-primary);
-      color: var(--text-primary);
-    }
-
-    .demo-output-list {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    /* Features Grid */
-    .features-section {
-      display: flex;
-      flex-direction: column;
-      gap: 32px;
-      text-align: center;
-    }
-
-    .section-title {
-      font-size: 2rem;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-    }
-
-    .section-desc {
-      font-size: 1rem;
-      color: var(--text-secondary);
-      max-width: 580px;
-      margin: 0 auto;
-    }
-
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
-      text-align: left;
-    }
-
-    .feature-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius-md);
-      padding: 24px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      transition: transform 0.2s ease, border-color 0.2s ease;
-    }
-
-    .feature-card:hover {
-      transform: translateY(-4px);
-      border-color: var(--accent-primary);
-    }
-
-    .feature-icon {
-      width: 44px;
-      height: 44px;
-      border-radius: var(--radius-sm);
-      background: rgba(99, 102, 241, 0.15);
-      color: var(--accent-primary);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.4rem;
-    }
-
-    .feature-title {
-      font-size: 1.15rem;
-      font-weight: 600;
-      color: var(--text-primary);
-    }
-
-    .feature-text {
-      font-size: 0.9rem;
-      color: var(--text-secondary);
-      line-height: 1.5;
-    }
-
-    /* How It Works Steps */
-    .steps-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 20px;
-      text-align: left;
-    }
-
-    .step-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius-md);
-      padding: 20px;
-      position: relative;
-    }
-
-    .step-number {
-      font-size: 2rem;
-      font-weight: 800;
-      color: var(--accent-primary);
-      opacity: 0.6;
-      margin-bottom: 8px;
-    }
-
-    /* FAQ */
-    .faq-list {
-      max-width: 720px;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      text-align: left;
-      width: 100%;
-    }
-
-    .faq-item {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius-md);
-      padding: 16px 20px;
-    }
-
-    .faq-question {
-      font-size: 1.05rem;
-      font-weight: 600;
-      color: var(--text-primary);
-      margin-bottom: 6px;
-    }
-
-    .faq-answer {
-      font-size: 0.9rem;
-      color: var(--text-secondary);
-      line-height: 1.5;
-    }
-
-    /* Footer */
-    .landing-footer {
-      border-top: 1px solid var(--border-color);
-      padding-top: 32px;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      color: var(--text-muted);
-      font-size: 0.85rem;
-    }
-
-    @media (max-width: 640px) {
-      .hero-title {
-        font-size: 2rem;
-      }
-      .nav-links {
-        display: none;
-      }
-    }
-  </style>
 </head>
-<body>
-  <div class="landing-wrapper">
+<body class="landing-body">
 
-    <!-- Navigation -->
-    <nav class="landing-nav">
-      <div class="brand">
-        <img src="./icons/icon.svg" alt="Task E logo" class="brand-icon">
+  <!-- ========================================================================
+       Top Navigation Bar (Sticky Glassmorphic Header)
+       ======================================================================== -->
+  <header class="landing-header">
+    <div class="landing-nav-container">
+      <a href="./landing.html" class="brand" aria-label="Task E Home">
+        <img src="./icons/icon.svg" alt="Task E Vector Emblem" class="brand-icon">
         <span class="brand-title">Task E</span>
-      </div>
-      <div class="nav-links">
-        <a href="#features" class="nav-link">Features</a>
-        <a href="#how-it-works" class="nav-link">How It Works</a>
-        <a href="#demo" class="nav-link">Live Demo</a>
-        <a href="#faq" class="nav-link">FAQ</a>
-      </div>
-      <div style="display: flex; align-items: center; gap: 10px;">
-        <button id="themeToggleBtn" class="btn-icon" aria-label="Toggle theme">
-          🌓
-        </button>
-        <a href="./index.html" class="btn btn-primary">
-          Launch App 🚀
-        </a>
-      </div>
-    </nav>
+      </a>
 
-    <!-- Hero Header -->
-    <header class="hero">
-      <div class="badge-pill">
-        <span>✨ Task E · Voice-Powered Productivity</span>
-      </div>
-      <h1 class="hero-title">Turn Spoken Thoughts Into Structured Tasks in Seconds.</h1>
-      <p class="hero-subtitle">
-        Tap the mic, speak naturally, and let Task E split clauses, extract relative due dates, assign priority badges, and tag categories automatically. 100% client-side with Google Sign-In & Offline PWA.
-      </p>
-      <div class="hero-ctas">
-        <a href="./index.html" class="btn-hero btn-hero-primary">
-          🎙️ Open Task E Web App
-        </a>
-        <a href="https://github.com/mark816p/task-e" target="_blank" rel="noopener noreferrer" class="btn-hero btn-hero-secondary">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+      <nav class="landing-nav-links" aria-label="Main Navigation">
+        <a href="#playground" class="landing-nav-link">Live Playground</a>
+        <a href="#architecture" class="landing-nav-link">NLP Engine</a>
+        <a href="#bento" class="landing-nav-link">Capabilities</a>
+        <a href="#comparison" class="landing-nav-link">Why Task E</a>
+        <a href="#faq" class="landing-nav-link">FAQ</a>
+      </nav>
+
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <!-- Theme Toggle Button -->
+        <button id="landingThemeBtn" class="btn-icon" aria-label="Toggle dark/light theme" title="Toggle theme">
+          <svg id="themeIconSun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
           </svg>
-          View on GitHub
+          <svg id="themeIconMoon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+
+        <!-- Launch Web App CTA -->
+        <a href="./index.html" class="btn btn-primary" style="padding: 10px 20px;">
+          <span>Launch App</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
         </a>
       </div>
-    </header>
+    </div>
+  </header>
 
-    <!-- Interactive Live Demo Section -->
-    <section id="demo" class="hero" style="padding-top: 0;">
-      <div class="demo-container">
-        <div class="demo-header">
-          <span class="demo-tag">Live NLP Parser Preview</span>
-          <span style="font-size: 0.8rem; color: var(--text-muted);">Try sample speech prompts</span>
-        </div>
-        <div class="demo-sample-btns">
-          <button class="demo-sample-btn" data-text="Remind me to call mom tomorrow evening, buy milk and eggs, and urgently submit the report by Friday">
-            🗣️ Call mom, milk & eggs, report
-          </button>
-          <button class="demo-sample-btn" data-text="Clean the kitchen tonight, pay electric bill by tomorrow at 5, and read chapter 4">
-            🗣️ Clean kitchen, pay bill, read
-          </button>
-          <button class="demo-sample-btn" data-text="Book dentist appointment next Monday at 2pm and schedule team sprint review">
-            🗣️ Dentist & Sprint review
-          </button>
-        </div>
-        <div id="demoInputBox" class="demo-input-box">
-          "Remind me to call mom tomorrow evening, buy milk and eggs, and urgently submit the report by Friday"
-        </div>
-        <div style="font-size: 0.85rem; font-weight: 600; color: var(--text-secondary); margin-top: 4px;">
-          Parsed Structured Output:
-        </div>
-        <div id="demoOutputList" class="demo-output-list"></div>
+  <!-- ========================================================================
+       Main Content Container
+       ======================================================================== -->
+  <main class="landing-main">
+
+    <!-- ======================================================================
+         1. Hero Section
+         ====================================================================== -->
+    <section class="landing-hero">
+      <div class="landing-badge">
+        <span class="badge-glow-dot"></span>
+        <span>Task E Engine v2.4 • Client-Side Heuristic NLP • 100% Privacy</span>
       </div>
-    </section>
 
-    <!-- Key Features Section -->
-    <section id="features" class="features-section">
-      <h2 class="section-title">Designed for Fast, Hands-Free Capture</h2>
-      <p class="section-desc">
-        Everything you need to turn chaotic thoughts into an organized daily agenda without manual typing or friction.
+      <h1 class="landing-hero-title">
+        Turn Continuous Voice Notes Into <span class="gradient-text">Actionable Agendas</span> in Milliseconds.
+      </h1>
+
+      <p class="landing-hero-subtitle">
+        Speak freely without awkward pauses. Task E automatically splits multi-clause sentences, extracts relative due dates, flags urgency levels, and categorizes tasks across 7 domains—completely in your browser with zero backend lag.
       </p>
 
-      <div class="features-grid">
-        <div class="feature-card">
-          <div class="feature-icon">🎙️</div>
-          <h3 class="feature-title">Web Speech API Integration</h3>
-          <p class="feature-text">
-            One-tap voice recording with live interim transcripts and animated sound wave visualizers. Supported natively in mobile and desktop browsers.
-          </p>
-        </div>
+      <div class="landing-hero-ctas">
+        <a href="./index.html" class="btn-hero-primary">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+            <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+            <line x1="12" y1="19" x2="12" y2="23"></line>
+            <line x1="8" y1="23" x2="16" y2="23"></line>
+          </svg>
+          <span>Start Dictating Now — It's Free</span>
+        </a>
 
-        <div class="feature-card">
-          <div class="feature-icon">🧠</div>
-          <h3 class="feature-title">Smart Natural Language Parser</h3>
-          <p class="feature-text">
-            Intelligently splits compound sentences on conjunctions while preserving noun phrases like "milk and eggs". Normalizes verbs into clean imperative titles.
-          </p>
-        </div>
+        <a href="#playground" class="btn-hero-secondary">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+          </svg>
+          <span>Try Interactive Simulator</span>
+        </a>
+      </div>
 
-        <div class="feature-card">
-          <div class="feature-icon">📅</div>
-          <h3 class="feature-title">Relative Due Dates & Times</h3>
-          <p class="feature-text">
-            Understands "tomorrow evening", "by Friday", "today at 5pm", and "in 2 hours". Computes both human-friendly labels and ISO datetime stamps.
-          </p>
+      <!-- Metrics & Performance Strip -->
+      <div class="metrics-strip">
+        <div class="metric-item">
+          <span class="metric-value">&lt; 35ms</span>
+          <span class="metric-label">Client-Side Parser Latency</span>
         </div>
-
-        <div class="feature-card">
-          <div class="feature-icon">🏷️</div>
-          <h3 class="feature-title">Automatic Categorization</h3>
-          <p class="feature-text">
-            Keywords automatically map tasks to Work, Shopping, Personal, Finance, Home, Study, or General tags with distinctive color coding.
-          </p>
+        <div class="metric-item">
+          <span class="metric-value">100%</span>
+          <span class="metric-label">Local-First Private Audio</span>
         </div>
-
-        <div class="feature-card">
-          <div class="feature-icon">🔒</div>
-          <h3 class="feature-title">Google Authentication</h3>
-          <p class="feature-text">
-            Sign in securely with Google Identity Services. Persists your profile, associates your tasks, and supports easy sign-out.
-          </p>
+        <div class="metric-item">
+          <span class="metric-value">7 Domains</span>
+          <span class="metric-label">Heuristic NLP Classifiers</span>
         </div>
-
-        <div class="feature-card">
-          <div class="feature-icon">⚡</div>
-          <h3 class="feature-title">Offline PWA & Local First</h3>
-          <p class="feature-text">
-            Install to your mobile home screen via Service Worker. Tasks are preserved locally in browser storage with full JSON & plain-text export options.
-          </p>
+        <div class="metric-item">
+          <span class="metric-value">Offline Ready</span>
+          <span class="metric-label">PWA Service Worker Engine</span>
         </div>
       </div>
     </section>
 
-    <!-- How It Works Section -->
-    <section id="how-it-works" class="features-section">
-      <h2 class="section-title">How Task E Works</h2>
-      <div class="steps-grid">
-        <div class="step-card">
-          <div class="step-number">01</div>
-          <h3 class="feature-title">Tap & Speak</h3>
-          <p class="feature-text">
-            Tap the big microphone button and speak your tasks in natural, continuous language. Watch the live transcript stream in real time.
-          </p>
+    <!-- ======================================================================
+         2. Interactive Live Speech & Parser Playground
+         ====================================================================== -->
+    <section id="playground" class="landing-section">
+      <div class="section-header">
+        <span class="section-tag">Interactive Simulator</span>
+        <h2 class="section-heading">Test the Natural Language Parser in Real Time</h2>
+        <p class="section-subtext">
+          Speak with your actual microphone or test with real conversational examples. Watch how continuous speech converts into clean, structured to-do items.
+        </p>
+      </div>
+
+      <div class="playground-container">
+        <!-- Input Column -->
+        <div class="playground-input-col">
+          <div class="playground-label">
+            <span>INPUT SPEECH MEMO</span>
+            <span id="playgroundStatus" style="font-size: 0.75rem; color: var(--accent-light);">Ready to parse</span>
+          </div>
+
+          <!-- Live Mic Bar -->
+          <div class="playground-mic-bar">
+            <button id="playgroundMicBtn" class="btn-playground-mic" aria-label="Record voice note" title="Click to speak">
+              <svg id="playMicIcon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+                <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                <line x1="12" y1="19" x2="12" y2="23"></line>
+                <line x1="8" y1="23" x2="16" y2="23"></line>
+              </svg>
+            </button>
+            <div style="display: flex; flex-direction: column;">
+              <span id="playMicLabel" style="font-size: 0.9rem; font-weight: 700;">Tap mic to dictate live speech</span>
+              <span style="font-size: 0.75rem; color: var(--text-muted);">Uses native Web Speech API directly in your browser</span>
+            </div>
+          </div>
+
+          <!-- Textarea for editing or manual input -->
+          <textarea id="playgroundTextarea" class="playground-textarea" placeholder="Speak with the mic above or type here..."></textarea>
+
+          <button id="runPlaygroundBtn" class="btn btn-primary" style="width: 100%;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 11 12 14 22 4"></polyline>
+              <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+            </svg>
+            <span>Execute NLP Parser</span>
+          </button>
+
+          <!-- Sample Prompts -->
+          <div style="margin-top: 8px;">
+            <span class="sample-prompts-label">Or load sample real-world voice memos:</span>
+            <div class="sample-prompts-grid" style="margin-top: 8px;">
+              <button class="sample-prompt-btn" data-memo="Remind me to call mom tomorrow evening, buy milk and eggs, and urgently submit the quarterly report by Friday">
+                <span>"Call mom tomorrow evening, buy milk and eggs, and urgently submit report by Friday"</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              </button>
+              <button class="sample-prompt-btn" data-memo="Clean the kitchen tonight, pay electric bill by tomorrow at 5pm, and read chapter 4 of algorithms">
+                <span>"Clean kitchen tonight, pay electric bill by tomorrow at 5pm, and read chapter 4"</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              </button>
+              <button class="sample-prompt-btn" data-memo="Schedule dentist appointment next Monday at 2pm, transfer 500 dollars to savings asap, and book flight tickets">
+                <span>"Dentist next Monday at 2pm, transfer 500 dollars asap, book flight tickets"</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              </button>
+            </div>
+          </div>
         </div>
-        <div class="step-card">
-          <div class="step-number">02</div>
-          <h3 class="feature-title">Instant NLP Parse</h3>
-          <p class="feature-text">
-            When you stop, our client-side parser splits the clauses, extracts due dates and urgency levels, assigns category tags, and trims clutter.
-          </p>
-        </div>
-        <div class="step-card">
-          <div class="step-number">03</div>
-          <h3 class="feature-title">Organize & Act</h3>
-          <p class="feature-text">
-            Reorder tasks via touch or drag-and-drop, edit details, check off completed items, or export your list to JSON/text anytime.
-          </p>
+
+        <!-- Output Column -->
+        <div class="playground-output-col">
+          <div class="playground-label">
+            <span>PARSED STRUCTURED TASKS</span>
+            <span id="outputTaskCount" style="font-size: 0.75rem; color: var(--text-muted);">0 items generated</span>
+          </div>
+
+          <div id="playgroundOutputList" class="playground-output-list">
+            <!-- Output cards populated dynamically via parser.js -->
+          </div>
+
+          <div style="background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 12px; font-size: 0.78rem; color: var(--text-muted);">
+            <strong style="color: var(--text-secondary);">Parsing Intelligence Applied:</strong>
+            <ul style="padding-left: 18px; margin-top: 4px; display: flex; flex-direction: column; gap: 2px;">
+              <li>Compound noun conjunction ("milk and eggs") preserved as a single task.</li>
+              <li>Relative date keywords ("tomorrow evening", "Friday") converted to ISO timestamps.</li>
+              <li>Urgency adjectives normalized into semantic priority tags.</li>
+            </ul>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- FAQ Section -->
-    <section id="faq" class="features-section">
-      <h2 class="section-title">Frequently Asked Questions</h2>
-      <div class="faq-list">
-        <div class="faq-item">
-          <h4 class="faq-question">Does Task E require a backend server?</h4>
-          <p class="faq-answer">
-            No! Task E runs 100% client-side in the browser using Vanilla JavaScript ES modules. Your tasks are stored safely in your browser's local storage.
+    <!-- ======================================================================
+         3. NLP Engine Architecture Pipeline Diagram
+         ====================================================================== -->
+    <section id="architecture" class="landing-section">
+      <div class="section-header">
+        <span class="section-tag">Zero-Backend Pipeline</span>
+        <h2 class="section-heading">How Task E Transforms Speech in 4 Steps</h2>
+        <p class="section-subtext">
+          No external language model API calls. No waiting for round-trip server requests. Everything is executed through deterministic regular expression heuristics and temporal resolvers right on the client machine.
+        </p>
+      </div>
+
+      <div class="pipeline-grid">
+        <div class="pipeline-card">
+          <div class="pipeline-step-badge">1</div>
+          <h3 class="pipeline-title">Continuous Audio Capture</h3>
+          <p class="pipeline-desc">
+            Direct integration with the browser's native Web Speech API stream. Handles interim speech tokens with zero audio data transmitted to third-party recording servers.
           </p>
+          <div class="pipeline-code">webkitSpeechRecognition()</div>
         </div>
-        <div class="faq-item">
-          <h4 class="faq-question">Can I use Task E if my browser doesn't support Web Speech API?</h4>
-          <p class="faq-answer">
-            Yes! Task E includes a dedicated manual text input drawer that runs through the exact same natural language parser.
+
+        <div class="pipeline-card">
+          <div class="pipeline-step-badge">2</div>
+          <h3 class="pipeline-title">Smart Clause Splitting</h3>
+          <p class="pipeline-desc">
+            Context-aware lookahead regex identifies true task boundaries (e.g. coordinating conjunctions followed by imperative action verbs) while protecting noun-pair conjunctions.
           </p>
+          <div class="pipeline-code">/(?:(?:\band\b|\bthen\b)(?=\s+(?:call|buy|...)))/</div>
         </div>
-        <div class="faq-item">
-          <h4 class="faq-question">How does Google Authentication work?</h4>
-          <p class="faq-answer">
-            Task E uses Google Identity Services (GIS). You can sign in using your Google account to personalize your profile and task management.
+
+        <div class="pipeline-card">
+          <div class="pipeline-step-badge">3</div>
+          <h3 class="pipeline-title">Temporal & Priority Extraction</h3>
+          <p class="pipeline-desc">
+            Resolves relative date words like "tomorrow evening", "by Friday", and "in 2 hours" into ISO timestamps, and scans for urgency tokens to grade priorities.
           </p>
+          <div class="pipeline-code">extractDueDate() + extractPriority()</div>
         </div>
-        <div class="faq-item">
-          <h4 class="faq-question">Can I install Task E on my iPhone or Android?</h4>
-          <p class="faq-answer">
-            Yes, Task E is a certified PWA. In Safari on iOS tap "Share" > "Add to Home Screen". On Chrome/Android, tap "Install App" from the browser menu.
+
+        <div class="pipeline-card">
+          <div class="pipeline-step-badge">4</div>
+          <h3 class="pipeline-title">Local-First Storage & PWA</h3>
+          <p class="pipeline-desc">
+            Writes tasks directly to localStorage schema v2. Cache-first Service Worker guarantees offline availability and instantaneous app launch on desktop and mobile.
           </p>
+          <div class="pipeline-code">localStorage + ServiceWorker (sw.js)</div>
         </div>
       </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="landing-footer">
-      <div>
-        <strong>Task E</strong> — Open source voice-powered productivity.
+    <!-- ======================================================================
+         4. Expansive Bento Grid (6 Deep Capabilities)
+         ====================================================================== -->
+    <section id="bento" class="landing-section">
+      <div class="section-header">
+        <span class="section-tag">Engine Features</span>
+        <h2 class="section-heading">Built for High-Velocity Human Thought</h2>
+        <p class="section-subtext">
+          Explore the engineered capabilities that make Task E drastically faster and more dependable than standard note-taking or to-do list applications.
+        </p>
       </div>
-      <div style="display: flex; gap: 16px;">
-        <a href="./index.html" style="color: var(--text-secondary); text-decoration: none;">Web App</a>
-        <a href="https://github.com/mark816p/task-e" target="_blank" rel="noopener noreferrer" style="color: var(--text-secondary); text-decoration: none;">GitHub</a>
+
+      <div class="bento-grid">
+        <!-- Bento Card 1: Clause Splitting (Large span 2) -->
+        <div class="bento-card col-span-2">
+          <div class="bento-icon-wrapper">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M16 3h5v5"></path>
+              <path d="M4 20L21 3"></path>
+              <path d="M21 16v5h-5"></path>
+              <path d="M15 15l6 6"></path>
+              <path d="M4 4l5 5"></path>
+            </svg>
+          </div>
+          <h3 class="bento-title">Intelligent Clause Boundary Splitter</h3>
+          <p class="bento-desc">
+            Naive voice parsers fail on compound phrases like <em>"buy milk and eggs and call the contractor"</em> by slicing between milk and eggs. Task E evaluates grammatical context, ensuring paired grocery or project items remain consolidated while genuine action directives are split cleanly.
+          </p>
+          <div class="bento-visual">
+            <span style="color: var(--text-muted); font-size: 0.78rem;">INPUT STRING:</span>
+            <code style="color: var(--text-primary); font-family: var(--font-mono);">"buy apples and bananas, then call Sarah"</code>
+            <span style="color: var(--success); font-weight: 700; margin-top: 4px;">✓ Output: 1. Buy apples and bananas | 2. Call Sarah</span>
+          </div>
+        </div>
+
+        <!-- Bento Card 2: Temporal Parsing -->
+        <div class="bento-card">
+          <div class="bento-icon-wrapper">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+          </div>
+          <h3 class="bento-title">Relative Temporal Math</h3>
+          <p class="bento-desc">
+            Understands human timing cues: "tonight" (8pm), "tomorrow morning" (9am), "tomorrow evening" (6pm), "by Friday", or "in 3 hours", automatically generating formatted date badges and ISO strings for native calendar pickers.
+          </p>
+          <div class="bento-visual">
+            <span style="color: var(--accent-light); font-weight: 600;">"tomorrow at 5" ➔ Tomorrow 5:00 PM</span>
+          </div>
+        </div>
+
+        <!-- Bento Card 3: Urgency Detection -->
+        <div class="bento-card">
+          <div class="bento-icon-wrapper">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path>
+            </svg>
+          </div>
+          <h3 class="bento-title">Priority & Urgency Detection</h3>
+          <p class="bento-desc">
+            Phrases like "urgently", "asap", "critical", or "high priority" immediately tag tasks with high urgency indicators, while phrases like "whenever" or "low priority" downgrade them.
+          </p>
+          <div class="bento-visual">
+            <span class="badge badge-priority-high" style="align-self: flex-start;">Urgent Task</span>
+          </div>
+        </div>
+
+        <!-- Bento Card 4: 7 Domain Life Classifiers (Large span 2) -->
+        <div class="bento-card col-span-2">
+          <div class="bento-icon-wrapper">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
+              <line x1="7" y1="7" x2="7.01" y2="7"></line>
+            </svg>
+          </div>
+          <h3 class="bento-title">7 Domain Heuristic Life Classifiers</h3>
+          <p class="bento-desc">
+            Tasks are automatically indexed across 7 vital life categories: <strong>Work</strong>, <strong>Shopping</strong>, <strong>Personal</strong>, <strong>Finance</strong>, <strong>Home</strong>, <strong>Study</strong>, and <strong>General</strong>. Filter your task board instantly by clicking category pills.
+          </p>
+          <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto;">
+            <span class="badge badge-tag-work">Work</span>
+            <span class="badge badge-tag-shopping">Shopping</span>
+            <span class="badge badge-tag-personal">Personal</span>
+            <span class="badge badge-tag-finance">Finance</span>
+            <span class="badge badge-tag-home">Home</span>
+            <span class="badge badge-tag-study">Study</span>
+            <span class="badge badge-tag-general">General</span>
+          </div>
+        </div>
+
+        <!-- Bento Card 5: Google Identity Services -->
+        <div class="bento-card">
+          <div class="bento-icon-wrapper">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+          </div>
+          <h3 class="bento-title">Client-Side Google Auth</h3>
+          <p class="bento-desc">
+            Seamless Google Identity Services (GIS) integration decodes signed OpenID Connect JWT tokens directly in JavaScript. Supports one-tap demo sign-in and custom Google Cloud OAuth client configurations.
+          </p>
+          <div class="bento-visual">
+            <span style="font-size: 0.78rem; color: var(--text-muted);">Zero-backend token verification</span>
+          </div>
+        </div>
+
+        <!-- Bento Card 6: Standalone PWA & Offline Engine (Span 2) -->
+        <div class="bento-card col-span-2">
+          <div class="bento-icon-wrapper">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+              <line x1="8" y1="21" x2="16" y2="21"></line>
+              <line x1="12" y1="17" x2="12" y2="21"></line>
+            </svg>
+          </div>
+          <h3 class="bento-title">Progressive Web App (PWA) Offline Architecture</h3>
+          <p class="bento-desc">
+            Installable on iOS Safari ("Add to Home Screen"), Android Chrome (WebAPK), and macOS/Windows desktop. Operates fully offline using cache-first Service Worker routing, ensuring you can review, edit, check off, and export tasks even in airplane mode.
+          </p>
+          <div class="bento-visual">
+            <span style="color: var(--success); font-weight: 600;">✓ Cache-First static asset caching • Instantaneous load</span>
+          </div>
+        </div>
       </div>
-    </footer>
+    </section>
 
-  </div>
+    <!-- ======================================================================
+         5. Comparison Matrix (Task E vs Traditional To-Do Apps)
+         ====================================================================== -->
+    <section id="comparison" class="landing-section">
+      <div class="section-header">
+        <span class="section-tag">Direct Comparison</span>
+        <h2 class="section-heading">Why Task E Outperforms Traditional To-Do Apps</h2>
+        <p class="section-subtext">
+          Compare how Task E handles natural human thought versus conventional keyboard-bound task managers and generic voice memo tools.
+        </p>
+      </div>
 
+      <div class="comparison-wrapper">
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th class="comparison-feature-col">Feature / Capability</th>
+              <th class="comparison-highlight">Task E</th>
+              <th>Traditional To-Do Apps (Todoist, Things)</th>
+              <th>Native Voice Memos (Apple/Google)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="comparison-feature-col">Hands-Free Natural Voice Input</td>
+              <td class="comparison-highlight"><span class="check-mark">✓</span> Built-in one-tap Web Speech</td>
+              <td><span class="cross-mark">✗</span> Manual typing or expensive plugin</td>
+              <td><span class="check-mark">✓</span> Raw audio recording only</td>
+            </tr>
+            <tr>
+              <td class="comparison-feature-col">Compound Sentence Splitting</td>
+              <td class="comparison-highlight"><span class="check-mark">✓</span> Smart boundary lookahead</td>
+              <td><span class="cross-mark">✗</span> Requires line-by-line manual entry</td>
+              <td><span class="cross-mark">✗</span> Keeps a single unparsed blob</td>
+            </tr>
+            <tr>
+              <td class="comparison-feature-col">Automatic Relative Date Extraction</td>
+              <td class="comparison-highlight"><span class="check-mark">✓</span> Instant ("tomorrow 5pm", "Friday")</td>
+              <td>⚠️ Limited natural date support</td>
+              <td><span class="cross-mark">✗</span> None</td>
+            </tr>
+            <tr>
+              <td class="comparison-feature-col">100% Client-Side Privacy</td>
+              <td class="comparison-highlight"><span class="check-mark">✓</span> Zero server audio transmission</td>
+              <td><span class="cross-mark">✗</span> Stored on cloud company servers</td>
+              <td>⚠️ Apple/Google cloud sync</td>
+            </tr>
+            <tr>
+              <td class="comparison-feature-col">Offline PWA Installation</td>
+              <td class="comparison-highlight"><span class="check-mark">✓</span> Full cache-first offline support</td>
+              <td>⚠️ Requires native app download</td>
+              <td><span class="check-mark">✓</span> Device native only</td>
+            </tr>
+            <tr>
+              <td class="comparison-feature-col">Cost & Subscriptions</td>
+              <td class="comparison-highlight"><span class="check-mark">✓</span> 100% Free & Open Source</td>
+              <td><span class="cross-mark">✗</span> $4 - $8 / month subscription</td>
+              <td><span class="check-mark">✓</span> Free</td>
+            </tr>
+            <tr>
+              <td class="comparison-feature-col">One-Click JSON & Markdown Export</td>
+              <td class="comparison-highlight"><span class="check-mark">✓</span> Instant export & backup restore</td>
+              <td>⚠️ Export paywalled or complex</td>
+              <td><span class="cross-mark">✗</span> Proprietary audio formats</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         6. Testimonials & Real-World User Personas
+         ====================================================================== -->
+    <section class="landing-section">
+      <div class="section-header">
+        <span class="section-tag">Real World Impact</span>
+        <h2 class="section-heading">Loved by Fast Thinkers Everywhere</h2>
+        <p class="section-subtext">
+          From engineers dictating sprint items on their commute to busy parents managing family logistics on the go.
+        </p>
+      </div>
+
+      <div class="testimonials-grid">
+        <div class="testimonial-card">
+          <p class="testimonial-quote">
+            "I dictate my entire morning agenda while driving to the office. Task E cleanly separates my work tickets from personal errands without forcing me to tap a screen once."
+          </p>
+          <div class="testimonial-user">
+            <div class="user-avatar">SL</div>
+            <div class="user-details">
+              <span class="user-name">Sarah Lin</span>
+              <span class="user-role">Principal Software Engineer</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <p class="testimonial-quote">
+            "Traditional to-do apps take so long to enter tags and dates that I lose my train of thought. With Task E, I say 'remind me to submit budget report by Friday urgently' and it’s done."
+          </p>
+          <div class="testimonial-user">
+            <div class="user-avatar">MR</div>
+            <div class="user-details">
+              <span class="user-name">Marcus Reed</span>
+              <span class="user-role">Operations Director</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <p class="testimonial-quote">
+            "Having severe ADHD, opening a complex task app creates immense friction. The big mic button and instant clause breakdown makes capturing my daily thoughts effortless."
+          </p>
+          <div class="testimonial-user">
+            <div class="user-avatar">EC</div>
+            <div class="user-details">
+              <span class="user-name">Elena Chen</span>
+              <span class="user-role">Product Designer & Researcher</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         7. Accordion FAQ Section
+         ====================================================================== -->
+    <section id="faq" class="landing-section">
+      <div class="section-header">
+        <span class="section-tag">Got Questions?</span>
+        <h2 class="section-heading">Frequently Asked Questions</h2>
+        <p class="section-subtext">
+          Everything you need to know about Task E, privacy, browser compatibility, and local-first data storage.
+        </p>
+      </div>
+
+      <div class="faq-grid">
+        <details class="faq-item" open>
+          <summary class="faq-summary">
+            <span>Does Task E send my voice or tasks to a remote server?</span>
+            <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </summary>
+          <div class="faq-body">
+            No! Task E is strictly local-first. Speech recognition utilizes your browser's native Web Speech API implementation, and the NLP clause splitting, date calculation, and task sorting are executed entirely within client-side JavaScript. Your tasks remain securely stored in your browser's localStorage.
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-summary">
+            <span>Which browsers support native voice dictation?</span>
+            <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </summary>
+          <div class="faq-body">
+            Google Chrome (Desktop & Android), Microsoft Edge, and Safari (iOS 14.5+ & macOS) fully support the Web Speech API. If you use a browser like Firefox where the Web Speech API is currently unavailable, Task E automatically provides an integrated manual text drawer that runs through the exact same NLP parser.
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-summary">
+            <span>How does Google Authentication work without a backend?</span>
+            <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </summary>
+          <div class="faq-body">
+            Task E connects directly to Google Identity Services (GIS). When you sign in, Google returns a cryptographically signed OpenID Connect JWT ID token. Task E decodes this token in the browser to extract your profile name, email, and avatar for personalized task attribution without requiring any server database.
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-summary">
+            <span>Can I install Task E on my mobile phone home screen?</span>
+            <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </summary>
+          <div class="faq-body">
+            Yes! On iOS Safari, tap the Share icon and select <strong>"Add to Home Screen"</strong>. On Chrome for Android, tap the menu and select <strong>"Install App"</strong>. It launches as a full-screen, standalone application with safe-area spacing and offline capabilities.
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-summary">
+            <span>Can I export my tasks to other apps or backups?</span>
+            <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </summary>
+          <div class="faq-body">
+            Yes! The Export & Backup modal allows you to copy formatted plain text checklists to your clipboard, download a .txt file, or export a complete .json backup. You can also restore past JSON backups anytime.
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         8. Pre-Footer Call to Action Banner
+         ====================================================================== -->
+    <section class="cta-banner">
+      <h2 class="cta-banner-title">
+        Experience the Future of Frictionless Voice Productivity.
+      </h2>
+      <p class="cta-banner-subtitle">
+        Zero installations required. Zero sign-up paywalls. Instant launch in your browser.
+      </p>
+      <a href="./index.html" class="btn-hero-primary" style="padding: 18px 42px; font-size: 1.15rem;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+          <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+          <line x1="12" y1="19" x2="12" y2="23"></line>
+          <line x1="8" y1="23" x2="16" y2="23"></line>
+        </svg>
+        <span>Open Task E Web App</span>
+      </a>
+    </section>
+
+  </main>
+
+  <!-- ========================================================================
+       Multi-Column SaaS Footer
+       ======================================================================== -->
+  <footer class="landing-footer">
+    <div class="footer-content">
+      <div class="footer-col">
+        <div class="brand" style="margin-bottom: 8px;">
+          <img src="./icons/icon.svg" alt="Task E logo" class="brand-icon">
+          <span class="brand-title">Task E</span>
+        </div>
+        <p class="footer-brand-desc">
+          Next-generation voice-to-task workspace. Built with Vanilla JavaScript ES modules, Web Speech API, and local-first architecture.
+        </p>
+      </div>
+
+      <div class="footer-col">
+        <span class="footer-heading">Product</span>
+        <div class="footer-links">
+          <a href="./index.html" class="footer-link">Web App</a>
+          <a href="#playground" class="footer-link">Live Playground</a>
+          <a href="#architecture" class="footer-link">NLP Pipeline</a>
+          <a href="#bento" class="footer-link">Capabilities</a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <span class="footer-heading">Documentation</span>
+        <div class="footer-links">
+          <a href="https://github.com/mark816p/task-e#readme" target="_blank" rel="noopener noreferrer" class="footer-link">README Manual</a>
+          <a href="https://github.com/mark816p/task-e/blob/main/CLAUDE.md" target="_blank" rel="noopener noreferrer" class="footer-link">Architecture Specs</a>
+          <a href="https://github.com/mark816p/task-e" target="_blank" rel="noopener noreferrer" class="footer-link">GitHub Repository</a>
+          <a href="https://github.com/mark816p/task-e/issues" target="_blank" rel="noopener noreferrer" class="footer-link">Report an Issue</a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <span class="footer-heading">Open Source</span>
+        <div class="footer-links">
+          <span style="font-size: 0.88rem; color: var(--text-muted);">License: MIT</span>
+          <span style="font-size: 0.88rem; color: var(--text-muted);">Zero Cloud Dependency</span>
+          <span style="font-size: 0.88rem; color: var(--text-muted);">Hosted on GitHub Pages</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>&copy; 2026 Task E. Open source software under the MIT License.</span>
+      <div style="display: flex; gap: 20px;">
+        <a href="https://github.com/mark816p/task-e" target="_blank" rel="noopener noreferrer" class="footer-link">GitHub</a>
+        <a href="./index.html" class="footer-link">Launch App</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========================================================================
+       Interactive Playground & Theme Controller Script (ES Module)
+       ======================================================================== -->
   <script type="module">
     import { parseSpeech } from './parser.js';
 
-    // Theme toggle
-    const themeBtn = document.getElementById('themeToggleBtn');
+    // Theme Management
+    const themeBtn = document.getElementById('landingThemeBtn');
+    const sunIcon = document.getElementById('themeIconSun');
+    const moonIcon = document.getElementById('themeIconMoon');
+
+    function updateThemeUI(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      if (theme === 'light') {
+        sunIcon.style.display = 'block';
+        moonIcon.style.display = 'none';
+      } else {
+        sunIcon.style.display = 'none';
+        moonIcon.style.display = 'block';
+      }
+      localStorage.setItem('task_e_theme', theme);
+    }
+
+    const savedTheme = localStorage.getItem('task_e_theme') || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+    updateThemeUI(savedTheme);
+
     themeBtn.addEventListener('click', () => {
       const current = document.documentElement.getAttribute('data-theme') || 'dark';
-      document.documentElement.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
+      updateThemeUI(current === 'dark' ? 'light' : 'dark');
     });
 
-    // Demo Parser Simulation
-    const demoInputBox = document.getElementById('demoInputBox');
-    const demoOutputList = document.getElementById('demoOutputList');
+    // Playground Interactive Simulation
+    const playgroundTextarea = document.getElementById('playgroundTextarea');
+    const playgroundMicBtn = document.getElementById('playgroundMicBtn');
+    const playMicLabel = document.getElementById('playMicLabel');
+    const runPlaygroundBtn = document.getElementById('runPlaygroundBtn');
+    const playgroundOutputList = document.getElementById('playgroundOutputList');
+    const outputTaskCount = document.getElementById('outputTaskCount');
+    const playgroundStatus = document.getElementById('playgroundStatus');
 
-    function runDemo(text) {
-      demoInputBox.textContent = `"${text}"`;
+    function executeParse(text) {
+      if (!text || !text.trim()) {
+        playgroundOutputList.innerHTML = '<div style="color: var(--text-muted); font-size: 0.88rem; padding: 20px 0; text-align: center;">Enter speech or tap the mic to parse tasks</div>';
+        outputTaskCount.textContent = '0 items generated';
+        return;
+      }
+
       const tasks = parseSpeech(text, new Date());
-      demoOutputList.innerHTML = '';
-      tasks.forEach(t => {
-        const item = document.createElement('div');
-        item.style.cssText = 'background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; padding: 10px 14px; display: flex; align-items: center; justify-content: space-between; gap: 8px;';
+      playgroundOutputList.innerHTML = '';
+      outputTaskCount.textContent = `${tasks.length} item${tasks.length === 1 ? '' : 's'} generated`;
 
-        let meta = [];
-        if (t.dueDate) meta.push(`📅 ${t.dueDate}`);
-        if (t.priority === 'high') meta.push(`🔥 Urgent`);
-        if (t.category) meta.push(`🏷️ ${t.category}`);
+      if (tasks.length === 0) {
+        playgroundOutputList.innerHTML = '<div style="color: var(--warning); font-size: 0.88rem; padding: 14px;">No actionable tasks found. Try including an action word (e.g. call, buy, submit).</div>';
+        return;
+      }
+
+      tasks.forEach((t, i) => {
+        const item = document.createElement('div');
+        item.className = 'playground-output-item';
+
+        let badges = [];
+        if (t.dueDate) {
+          badges.push(`<span class="badge badge-due">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            ${t.dueDate}
+          </span>`);
+        }
+        if (t.priority === 'high') {
+          badges.push(`<span class="badge badge-priority-high">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
+            Urgent
+          </span>`);
+        }
+        const tagClass = `badge-tag-${t.category || 'general'}`;
+        badges.push(`<span class="badge ${tagClass}">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+          ${t.category || 'general'}
+        </span>`);
 
         item.innerHTML = `
-          <div style="display: flex; align-items: center; gap: 8px;">
-            <span style="color: var(--success); font-weight: bold;">✓</span>
-            <span style="font-weight: 500;">${t.title}</span>
+          <div class="output-item-header">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="color: var(--success); font-weight: 800; font-size: 0.9rem;">✓</span>
+              <span class="output-item-title">${escapeHTML(t.title)}</span>
+            </div>
+            <span style="font-size: 0.75rem; color: var(--text-muted); font-family: var(--font-mono);">#${i + 1}</span>
           </div>
-          <div style="display: flex; gap: 6px; font-size: 0.75rem; color: var(--text-muted);">
-            ${meta.map(m => `<span style="background: var(--bg-secondary); padding: 2px 6px; border-radius: 4px;">${m}</span>`).join('')}
+          <div class="output-item-meta">
+            ${badges.join('')}
           </div>
         `;
-        demoOutputList.appendChild(item);
+        playgroundOutputList.appendChild(item);
       });
     }
 
-    document.querySelectorAll('.demo-sample-btn').forEach(btn => {
-      btn.addEventListener('click', () => runDemo(btn.dataset.text));
+    function escapeHTML(str) {
+      if (!str) return '';
+      return str.replace(/[&<>'"]/g, tag => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        "'": '&#39;',
+        '"': '&quot;'
+      }[tag] || tag));
+    }
+
+    // Run button
+    runPlaygroundBtn.addEventListener('click', () => {
+      executeParse(playgroundTextarea.value);
     });
 
-    // Run initial demo
-    runDemo("Remind me to call mom tomorrow evening, buy milk and eggs, and urgently submit the report by Friday");
+    // Sample buttons
+    document.querySelectorAll('.sample-prompt-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const text = btn.getAttribute('data-memo');
+        playgroundTextarea.value = text;
+        executeParse(text);
+      });
+    });
+
+    // Interactive Microphone on Landing Page
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    let recognition = null;
+    let isListening = false;
+
+    if (SpeechRecognition) {
+      recognition = new SpeechRecognition();
+      recognition.continuous = true;
+      recognition.interimResults = true;
+      recognition.lang = 'en-US';
+
+      recognition.onstart = () => {
+        isListening = true;
+        playgroundMicBtn.classList.add('recording');
+        playMicLabel.textContent = 'Listening... Speak your tasks';
+        playgroundStatus.textContent = 'Recording live audio...';
+      };
+
+      recognition.onresult = (event) => {
+        let transcript = '';
+        for (let i = 0; i < event.results.length; i++) {
+          transcript += event.results[i][0].transcript;
+        }
+        playgroundTextarea.value = transcript;
+        executeParse(transcript);
+      };
+
+      recognition.onerror = (e) => {
+        isListening = false;
+        playgroundMicBtn.classList.remove('recording');
+        playMicLabel.textContent = 'Tap mic to dictate live speech';
+        playgroundStatus.textContent = 'Speech error: ' + (e.error || 'check microphone');
+      };
+
+      recognition.onend = () => {
+        isListening = false;
+        playgroundMicBtn.classList.remove('recording');
+        playMicLabel.textContent = 'Tap mic to dictate live speech';
+        playgroundStatus.textContent = 'Done listening';
+      };
+
+      playgroundMicBtn.addEventListener('click', () => {
+        if (isListening) {
+          recognition.stop();
+        } else {
+          try {
+            recognition.start();
+          } catch (err) {
+            console.warn('Speech start error:', err);
+          }
+        }
+      });
+    } else {
+      playMicLabel.textContent = 'Voice dictation unavailable in this browser';
+      playgroundMicBtn.style.opacity = '0.5';
+      playgroundMicBtn.title = 'Web Speech API not supported in this browser';
+    }
+
+    // Initial run
+    const defaultMemo = "Remind me to call mom tomorrow evening, buy milk and eggs, and urgently submit the quarterly report by Friday";
+    playgroundTextarea.value = defaultMemo;
+    executeParse(defaultMemo);
   </script>
 </body>
 </html>

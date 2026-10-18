@@ -391,7 +391,7 @@ function processTranscript(text) {
   const userId = state.user ? state.user.id : null;
   state.tasks = addTasks(parsed, userId);
   renderTasks();
-  showToast(`Parsed and added ${parsed.length} new task${parsed.length > 1 ? 's' : ''}! 🎉`, 'success');
+  showToast(`Parsed and added ${parsed.length} new task${parsed.length > 1 ? 's' : ''}!`, 'success');
 }
 
 /* ==========================================================================
@@ -478,7 +478,10 @@ function createTaskCard(task, index) {
   if (task.priority === 'high') {
     priorityBadge = `
       <span class="badge badge-priority-high">
-        🔥 Urgent
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/>
+        </svg>
+        Urgent
       </span>
     `;
   } else if (task.priority === 'low') {
@@ -493,7 +496,11 @@ function createTaskCard(task, index) {
   const tagClass = `badge-tag-${task.category || 'general'}`;
   const tagBadge = `
     <span class="badge ${tagClass}">
-      🏷️ ${escapeHTML(task.category || 'general')}
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/>
+        <line x1="7" y1="7" x2="7.01" y2="7"/>
+      </svg>
+      ${escapeHTML(task.category || 'general')}
     </span>
   `;
 
@@ -516,8 +523,12 @@ function createTaskCard(task, index) {
     <!-- Actions & Mobile Reordering -->
     <div class="task-actions">
       <div class="reorder-controls">
-        <button class="reorder-btn move-up-btn" title="Move up" aria-label="Move task up">▲</button>
-        <button class="reorder-btn move-down-btn" title="Move down" aria-label="Move task down">▼</button>
+        <button class="reorder-btn move-up-btn" title="Move up" aria-label="Move task up">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+        </button>
+        <button class="reorder-btn move-down-btn" title="Move down" aria-label="Move task down">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
       </div>
       <button class="card-btn edit-btn" title="Edit task" aria-label="Edit task">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -856,7 +867,7 @@ function initEventListeners() {
     elements.quickSignInBtn.addEventListener('click', () => {
       quickSignIn('Demo User', 'demo.user@gmail.com');
       closeAuthModal();
-      showToast('Signed in with Google Demo Account! 🎉', 'success');
+      showToast('Signed in with Google Demo Account!', 'success');
     });
   }
 
